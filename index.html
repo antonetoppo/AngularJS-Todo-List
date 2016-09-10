@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ToDo Using AngukarJS</title>
+    <link href="https://fonts.googleapis.com/css?family=Mogra" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Mogra', cursive;
+        }
+        
+        .container {
+            width: 80vw;
+            border-radius: 10px;
+            margin: 0 auto;
+            box-shadow: 0 1px 10px 1px grey;
+            padding: 20px 15px;
+        }
+        
+        h1 {
+            color: #62cca8;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        #todoInput {
+            width: 90%;
+            padding: 5px 10px;
+            border: 1px solid #62cca8;
+            border-radius: 5px;
+        }
+        
+        #btn {
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin: 5px 0;
+            font-size: 1em;
+            border: 1px solid #158ecf;
+            background-color: #b3d9ec;
+        }
+        
+        .check {
+            border: #b3d9ec;
+            background: #b3d9ec;
+        }
+        
+        .itemHolder {
+            width: 90%;
+            margin: 10px auto;
+            padding: 5px;
+            border-radius: 10px;
+            border: 1px solid #62cca8;
+        }
+        
+        .itemHolder:hover {
+            background: #f5f5f5;
+        }
+        
+        .close {
+            --size: 15px;
+            height: var(--size);
+            width: var(--size);
+            border-radius: 100%;
+            border: 1px solid #b3d9ec;
+            float: right;
+            position: relative;
+            top: 2px;
+        }
+        
+        .close:before,
+        .close:after {
+            content: '';
+            display: block;
+            width: 2px;
+            height: 80%;
+            position: absolute;
+            top: 10%;
+            left: 46%;
+            background: #b3d9ec;
+        }
+        
+        .close:before {
+            transform: rotate(45deg);
+        }
+        
+        .close:after {
+            transform: rotate(-45deg);
+        }
+    </style>
+
+</head>
+
+<body ng-app="todoApp">
+
+    <section class="container" ng-ctrl="todoCtrl">
+        <h1 class="text-center">AngularJS ToDo App</h1>
+        <form action="" class="text-center">
+            <input type="text" name="todo" id="todoInput" placeholder="Enter Here" ng-model="todoVal">
+            <button type="submit" id="btn">Enter</button>
+        </form>
+        <div class="itemContainer">
+            <div class="itemHolder" ng-repeat="i in todoList">
+                <input type="checkbox" class="check" ng-model="i.marked"><span ng-bind="i.todoText">100</span>
+                <div class="close" ng-click="removeMarked()"></div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script>
+        var app = angular.module("todoApp", []);
+        app.controller('todoCtrl', function ($scope) {
+            $scope.todoList = [];
+
+            $scope.addToList = function () {
+                $scope.todoList.push({
+                    todoText: $scope.todoVal,
+                    marked: false
+                });
+            }
+
+            $scope.removeMarked = function () {
+                angular.forEach(todoList, function (x) {
+                    if (x.marked)
+                        $scope.todoList.pop(x);
+                })
+            }
+        })
+    </script>
+
+</body>
+
+</html>
