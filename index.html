@@ -111,7 +111,7 @@
         <div class="itemContainer">
             <div class="itemHolder" ng-repeat="todo in todoList">
                 <input type="checkbox" class="check" ng-model="todo.marked"><span>{{todo.todoText}}</span>
-                <div class="close" ng-click="close()"></div>
+                <div class="close" ng-click="close(todo)"></div>
             </div>
         </div>
     </section>
@@ -133,8 +133,9 @@
                 }
             };
             
-            $scope.close = function ($index) {
-                $scope.todoList.splice(0,1);
+            $scope.close = function (element) {
+                $scope.index = $scope.todoList.indexOf(element);;
+                $scope.todoList.splice($scope.index,1);
             }
 
             $scope.removeMarked = function () {
