@@ -116,7 +116,7 @@
                 width: 60vw;
             }
             .itemHolder {
-                width: 60%;
+                width: 75%;
             }
         }
     </style>
@@ -133,7 +133,7 @@
         </form>
         <div class="itemContainer">
             <div class="itemHolder" ng-repeat="todo in todoList">
-                <input type="checkbox" class="check" ng-model="todo.marked" ng-click="toggleMark()"><span>{{todo.todoText}}</span>
+                <input type="checkbox" class="check" ng-model="todo.marked" ng-click="toggleMark(todo)"><span>{{todo.todoText}}</span>
                 <div class="close" ng-click="close(todo)"></div>
             </div>
         </div>
@@ -157,17 +157,22 @@
             };
 
             $scope.close = function (element) {
-                $scope.index = $scope.todoList.indexOf(element);;
+                $scope.index = $scope.todoList.indexOf(element);
                 $scope.todoList.splice($scope.index, 1);
             }
 
-            $scope.toggleMark = function () {
-                if (document.querySelector("span").className == "strike") {
-                    document.querySelector("span").className = "";
-                    document.querySelector("span").parentElement.className = "itemHolder";
+            $scope.toggleMark = function (element) {
+                $scope.index = $scope.todoList.indexOf(element);
+                $scope.tag = document.querySelectorAll("span");
+                $scope.element = $scope.tag[$scope.index];
+                if ($scope.element.className.search(/strike/i) > 0) {
+                    $scope.todoList[$scope.index].marked = false;
+                    $scope.element.className = $scope.element.className.replace(/(?:^|\s)strike(?!\S)/g, '');
+                    $scope.element.parentElement.className = $scope.element.parentElement.className.replace(/(?:^|\s)done(?!\S)/g, '');
                 } else {
-                    document.querySelector("span").className = "strike";
-                    document.querySelector("span").parentElement.className = "itemHolder done";
+                    $scope.todoList[$scope.index].marked = true;
+                    $scope.element.className += " strike";
+                    $scope.element.parentElement.className += " done";
                 }
             }
 
