@@ -92,22 +92,26 @@
         .close:after {
             transform: rotate(-45deg);
         }
+        
+        .close:active:before,.close:active:after{
+            background: #000;
+        }
     </style>
 
 </head>
 
-<body ng-app="todoApp">
+<body ng-app="todoApp" ng-controller="todoCtrl">
 
-    <section class="container" ng-ctrl="todoCtrl">
+    <section class="container">
         <h1 class="text-center">AngularJS ToDo App</h1>
-        <form action="" class="text-center">
+        <form class="text-center" ng-submit="addToList()">
             <input type="text" name="todo" id="todoInput" placeholder="Enter Here" ng-model="todoVal">
-            <button type="submit" id="btn">Enter</button>
+            <button type="submit" id="btn">Add To List</button>
         </form>
         <div class="itemContainer">
-            <div class="itemHolder" ng-repeat="i in todoList">
-                <input type="checkbox" class="check" ng-model="i.marked"><span ng-bind="i.todoText">100</span>
-                <div class="close" ng-click="removeMarked()"></div>
+            <div class="itemHolder" ng-repeat="todo in todoList">
+                <input type="checkbox" class="check" ng-model="todo.marked"><span>{{todo.todoText}}</span>
+                <div class="close" ng-click="close()"></div>
             </div>
         </div>
     </section>
@@ -115,23 +119,31 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script>
         var app = angular.module("todoApp", []);
-        app.controller('todoCtrl', function ($scope) {
+        app.controller("todoCtrl", function ($scope) {
             $scope.todoList = [];
-
+            $scope.todoVal = "";
+            
             $scope.addToList = function () {
-                $scope.todoList.push({
-                    todoText: $scope.todoVal,
-                    marked: false
-                });
+                if ($scope.todoVal != ""){
+                    $scope.todoList.push({
+                        todoText: $scope.todoVal,
+                        marked: false
+                    });
+                    $scope.todoVal = "";
+                }
+            };
+            
+            $scope.close = function ($index) {
+                $scope.todoList.splice(0,1);
             }
 
             $scope.removeMarked = function () {
                 angular.forEach(todoList, function (x) {
                     if (x.marked)
                         $scope.todoList.pop(x);
-                })
-            }
-        })
+                });
+            };
+        });
     </script>
 
 </body>
