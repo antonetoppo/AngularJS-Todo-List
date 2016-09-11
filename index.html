@@ -59,7 +59,11 @@
         }
         
         .itemHolder:hover {
-            background: #f5f5f5;
+            background: #a5f9dc;
+        }
+        
+        span {
+            color: #199ada;
         }
         
         .close {
@@ -67,7 +71,7 @@
             height: var(--size);
             width: var(--size);
             border-radius: 100%;
-            border: 1px solid #b3d9ec;
+            border: 1px solid #199ada;
             float: right;
             position: relative;
             top: 2px;
@@ -82,7 +86,7 @@
             position: absolute;
             top: 10%;
             left: 46%;
-            background: #b3d9ec;
+            background: #199ada;
         }
         
         .close:before {
@@ -93,8 +97,18 @@
             transform: rotate(-45deg);
         }
         
-        .close:active:before,.close:active:after{
+        .close:active:before,
+        .close:active:after {
             background: #000;
+        }
+        
+        .strike {
+            text-decoration: line-through;
+            text-decoration-color: #FFF;
+        }
+        
+        .done {
+            background: #e5e5e5;
         }
     </style>
 
@@ -110,7 +124,7 @@
         </form>
         <div class="itemContainer">
             <div class="itemHolder" ng-repeat="todo in todoList">
-                <input type="checkbox" class="check" ng-model="todo.marked"><span>{{todo.todoText}}</span>
+                <input type="checkbox" class="check" ng-model="todo.marked" ng-click="toggleMark()"><span>{{todo.todoText}}</span>
                 <div class="close" ng-click="close(todo)"></div>
             </div>
         </div>
@@ -122,9 +136,9 @@
         app.controller("todoCtrl", function ($scope) {
             $scope.todoList = [];
             $scope.todoVal = "";
-            
+
             $scope.addToList = function () {
-                if ($scope.todoVal != ""){
+                if ($scope.todoVal != "") {
                     $scope.todoList.push({
                         todoText: $scope.todoVal,
                         marked: false
@@ -132,10 +146,20 @@
                     $scope.todoVal = "";
                 }
             };
-            
+
             $scope.close = function (element) {
                 $scope.index = $scope.todoList.indexOf(element);;
-                $scope.todoList.splice($scope.index,1);
+                $scope.todoList.splice($scope.index, 1);
+            }
+
+            $scope.toggleMark = function () {
+                if (document.querySelector("span").className == "strike") {
+                    document.querySelector("span").className = "";
+                    document.querySelector("span").parentElement.className = "itemHolder";
+                } else {
+                    document.querySelector("span").className = "strike";
+                    document.querySelector("span").parentElement.className = "itemHolder done";
+                }
             }
 
             $scope.removeMarked = function () {
