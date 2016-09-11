@@ -30,7 +30,7 @@
         }
         
         #todoInput {
-            width: 90%;
+            width: 68%;
             padding: 5px 10px;
             border: 1px solid #62cca8;
             border-radius: 5px;
@@ -110,6 +110,15 @@
         .done {
             background: #e5e5e5;
         }
+        
+        @media (min-width:769px) {
+            .container {
+                width: 60vw;
+            }
+            .itemHolder {
+                width: 60%;
+            }
+        }
     </style>
 
 </head>
@@ -120,7 +129,7 @@
         <h1 class="text-center">AngularJS ToDo App</h1>
         <form class="text-center" ng-submit="addToList()">
             <input type="text" name="todo" id="todoInput" placeholder="Enter Here" ng-model="todoVal">
-            <button type="submit" id="btn">Add To List</button>
+            <button type="submit" id="btn">Add</button>
         </form>
         <div class="itemContainer">
             <div class="itemHolder" ng-repeat="todo in todoList">
