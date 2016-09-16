@@ -13,6 +13,32 @@
             font-family: 'Mogra', cursive, sans-serif;
         }
         
+        @keyframes animate-fade-in {
+            from {
+                transform: none;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes animate-fade-out {
+            from {
+                transform: none;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+        
+        .fade-in {
+            animation: animate-fade-in 1s forwards;
+        }
+        
+        .fade-out {
+            animation: animate-fade-out 1s forwards;
+        }
+        
         .container {
             width: 80vw;
             border-radius: 10px;
@@ -105,6 +131,10 @@
             background: #e5e5e5;
         }
         
+        .done:hover {
+            background: #e5e5e5;
+        }
+        
         .done > span {
             color: darkgray;
         }
@@ -130,7 +160,7 @@
             <button type="submit" id="btn">Add</button>
         </form>
         <div class="itemContainer">
-            <div class="itemHolder" ng-repeat="todo in todoList">
+            <div class="itemHolder fade-in" ng-repeat="todo in todoList">
                 <input type="checkbox" class="check" ng-model="todo.marked" ng-click="toggleMark(todo)"><span>{{todo.todoText}}</span>
                 <div class="close" ng-click="close(todo)"></div>
             </div>
@@ -156,6 +186,13 @@
 
             $scope.close = function (element) {
                 $scope.index = $scope.todoList.indexOf(element);
+
+                $scope.tag = document.querySelectorAll(".itemHolder");
+                $scope.element = $scope.tag[$scope.index];
+                if ($scope.element.className.search(/fade-out/i) > 0)
+                    return;
+
+                $scope.element.className += " fade-out";
                 $scope.todoList.splice($scope.index, 1);
             }
 
@@ -166,7 +203,7 @@
                 if ($scope.element.className.search(/strike/i) > 0) {
                     $scope.todoList[$scope.index].marked = false;
                     $scope.element.className = $scope.element.className.replace(/(?:^|\s)strike(?!\S)/g, '');
-                    $scope.element.parentElement.className = $scope.element.parentElement.className.replace(/(?:^|\s)done(?!\S)/g, '');
+                    $scope.element.parentElement.className.replace(/(?:^|\s)done(?!\S)/g, '');
                 } else {
                     $scope.todoList[$scope.index].marked = true;
                     $scope.element.className += " strike";
@@ -174,12 +211,6 @@
                 }
             }
 
-            $scope.removeMarked = function () {
-                angular.forEach(todoList, function (x) {
-                    if (x.marked)
-                        $scope.todoList.pop(x);
-                });
-            };
         });
     </script>
 
