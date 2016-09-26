@@ -7,6 +7,7 @@
 
     <title>ToDo Using AngukarJS</title>
     <link href="https://fonts.googleapis.com/css?family=Mogra" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
     <style>
         * {
@@ -32,7 +33,7 @@
         }
         
         .fade-in {
-            animation: animate-fade-in 1s forwards;
+            animation: animate-fade-in 1s forwards infinite;
         }
         
         .fade-out {
@@ -88,39 +89,15 @@
         }
         
         .close {
-            --size: 15px;
-            height: var(--size);
-            width: var(--size);
-            border-radius: 100%;
-            border: 1px solid #199ada;
-            float: right;
             position: relative;
-            top: 2px;
+            top: -2px;
+            font-size: 1.5em;
+            float: right;
+            color: #199ada;
         }
         
-        .close:before,
-        .close:after {
-            content: '';
-            display: block;
-            width: 2px;
-            height: 80%;
-            position: absolute;
-            top: 10%;
-            left: 46%;
-            background: #199ada;
-        }
-        
-        .close:before {
-            transform: rotate(45deg);
-        }
-        
-        .close:after {
-            transform: rotate(-45deg);
-        }
-        
-        .close:active:before,
-        .close:active:after {
-            background: #000;
+        .close:active {
+            color: #000;
         }
         
         .strike {
@@ -162,7 +139,8 @@
         <div class="itemContainer">
             <div class="itemHolder fade-in" ng-repeat="todo in todoList">
                 <input type="checkbox" class="check" ng-model="todo.marked" ng-click="toggleMark(todo)"><span>{{todo.todoText}}</span>
-                <div class="close" ng-click="close(todo)"></div>
+                <i class="fa fa-times-circle-o close" aria-hidden="true" ng-click="close(todo)"></i>
+                <!--                <div class="close">REMOVE</div>-->
             </div>
         </div>
     </section>
@@ -203,7 +181,7 @@
                 if ($scope.element.className.search(/strike/i) > 0) {
                     $scope.todoList[$scope.index].marked = false;
                     $scope.element.className = $scope.element.className.replace(/(?:^|\s)strike(?!\S)/g, '');
-                    $scope.element.parentElement.className.replace(/(?:^|\s)done(?!\S)/g, '');
+                    $scope.element.parentElement.className = $scope.element.parentElement.className.replace(/(?:^|\s)done(?!\S)/g, '');
                 } else {
                     $scope.todoList[$scope.index].marked = true;
                     $scope.element.className += " strike";
