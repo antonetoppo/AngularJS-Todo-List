@@ -1,0 +1,138 @@
+* {
+    font-family: 'Mogra', cursive, sans-serif;
+}
+
+@-webkit-keyframes animate-fade-in {
+    from {
+        -webkit-transform: none;
+        transform: none;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes animate-fade-in {
+    from {
+        -webkit-transform: none;
+        transform: none;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes animate-fade-out {
+    from {
+        -webkit-transform: none;
+        transform: none;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes animate-fade-out {
+    from {
+        -webkit-transform: none;
+        transform: none;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.fade-in {
+    -webkit-animation: animate-fade-in 1s forwards infinite;
+    animation: animate-fade-in 1s forwards infinite;
+}
+
+.fade-out {
+    -webkit-animation: animate-fade-out 1s forwards;
+    animation: animate-fade-out 1s forwards;
+}
+
+.container {
+    width: 80vw;
+    border-radius: 10px;
+    margin: 0 auto;
+    box-shadow: 0 1px 10px 1px grey;
+    padding: 20px 15px;
+}
+
+h1 {
+    color: #62cca8;
+}
+
+.text-center {
+    text-align: center;
+}
+
+#todoInput {
+    width: 68%;
+    padding: 5px 10px;
+    border: 1px solid #62cca8;
+    border-radius: 5px;
+}
+
+#btn {
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 5px 0;
+    font-size: 1em;
+    border: 1px solid #158ecf;
+    background-color: #b3d9ec;
+}
+
+.itemHolder {
+    width: 90%;
+    margin: 10px auto;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid #62cca8;
+}
+
+.itemHolder:hover {
+    background: #d5fbee;
+}
+
+span {
+    color: #199ada;
+}
+
+.close {
+    position: relative;
+    top: -2px;
+    font-size: 1.5em;
+    float: right;
+    color: #199ada;
+}
+
+.close:active {
+    color: #000;
+}
+
+.strike {
+    text-decoration: line-through;
+}
+
+.done {
+    background: #e5e5e5;
+}
+
+.done:hover {
+    background: #e5e5e5;
+}
+
+.done > span {
+    color: darkgray;
+}
+
+@media (min-width:769px) {
+    .container {
+        width: 60vw;
+    }
+    .itemHolder {
+        width: 75%;
+    }
+}
